@@ -140,14 +140,6 @@ Proof.
   reflexivity.
 Defined.
 
-Lemma isaprop_is_precategory (C : precategory_data)
-  : isaprop (is_precategory C).
-Proof.
-  intro. apply isofhleveltotal2.
-  { apply isofhleveltotal2. { repeat (apply impred; intro); apply setproperty. }
-    intros _. repeat (apply impred; intro); apply setproperty. }
-  intros _. repeat (apply impred; intro); apply setproperty. Qed.
-
 Lemma opp_opp_precat (C : precategory) : C == C^op^op.
 Proof.
   intros [data ispre]. apply (pair_path (opp_opp_precat_data data)).
@@ -303,11 +295,6 @@ Module StandardCategories.
   Definition compose' { C:precategory_data } { a b c:ob C }
     (g:b → c) (f:a → b) : a → c.
   Proof. intros. exact (compose f g). Defined.
-  Definition idtomor {C:precategory} (a b:ob C) : a == b -> a → b.
-  Proof. intros ? ? ? H. destruct H. exact (identity a). Defined.
-  Lemma eq_idtoiso_idtomor {C:precategory} (a b:ob C) (e:a == b) :
-    pr1 (idtoiso e) == idtomor _ _ e.
-  Proof. intros. destruct e. reflexivity. Defined.
   (** *** the path groupoid *)
   Lemma path_assoc (X:UU) (a b c d:X) 
           (f : a == b) (g : b == c) (h : c == d)
